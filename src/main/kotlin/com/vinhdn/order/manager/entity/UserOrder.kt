@@ -1,13 +1,14 @@
 package com.vinhdn.order.manager.entity
 
+import org.hibernate.annotations.Where
 import java.util.*
 import javax.persistence.*
 
 @Entity
-@Table(name = "order")
-data class Order(
+@Table(name = "user_order")
+data class UserOrder(
     @Id
-    val id: String = "",
+    var id: String = "",
     @Column(name = "shop_id")
     val shopId: String = "",
     @Column(name = "customer_id")
@@ -23,23 +24,23 @@ data class Order(
     @Column(name = "create_date")
     val createDate: Date? = null,
 
-    @ManyToOne
+    @ManyToOne(cascade = [CascadeType.DETACH], fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", insertable = false, updatable = false)
     val customer: Customer? = null,
 
-    @ManyToOne
+    @ManyToOne(cascade = [CascadeType.DETACH], fetch = FetchType.EAGER)
     @JoinColumn(name = "shop_id", insertable = false, updatable = false)
     val shop: Shop? = null,
 
-    @ManyToOne
+    @ManyToOne(cascade = [CascadeType.DETACH], fetch = FetchType.EAGER)
     @JoinColumn(name = "user_create", insertable = false, updatable = false)
     val userCreate: User? = null,
 
-    @ManyToMany
+    @OneToMany(cascade = [CascadeType.DETACH], fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
-    val orderProducts: Set<OrderProduct>? = null,
+    val orderProducts: List<OrderProduct>? = null,
 
-    @OneToMany
+    @OneToMany(cascade = [CascadeType.DETACH], fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    val orderShips: Set<OrderShip>? = null
+    val orderShips: List<OrderShip>? = null
 )

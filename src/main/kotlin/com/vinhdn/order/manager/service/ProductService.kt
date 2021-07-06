@@ -6,6 +6,7 @@ import com.vinhdn.order.manager.repository.ProductPhotoRepository
 import com.vinhdn.order.manager.repository.ProductRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.reactor.mono
+import net.bytebuddy.utility.RandomString
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.util.StringUtils
@@ -55,16 +56,16 @@ class ProductService {
     }
 
     suspend fun uploadImage(productId: String, file: MultipartFile) = mono {
-        val uuid = UUID.randomUUID()
+        val uuid = RandomString.make(15)
         val fullName = StringUtils.cleanPath(file.originalFilename!!)
         val lastIndex = fullName.lastIndexOf('.')
         val fileExtension = fullName.substring(lastIndex + 1)
 
         val copyLocation: Path =
-            Paths.get(uploadDir + File.separator + uuid.toString() + "." + fileExtension)
+            Paths.get(uploadDir + File.separator + uuid + "." + fileExtension)
         val result = saveFile(file.inputStream, copyLocation)
         if(result > 0) {
-            productPhotoRepository.save(ProductPhoto(productId = productId, link = uuid.toString()))
+            productPhotoRepository.save(ProductPhoto(productId = productId, link = uuid))
         } else {
             null
         }

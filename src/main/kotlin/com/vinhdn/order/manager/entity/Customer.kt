@@ -6,12 +6,11 @@ import javax.persistence.*
 @Table(name = "customer")
 data class Customer(
     @Id
-    val id: String = "",
+    var id: String = "",
     val name: String = "",
     val phone: String = "",
     val address: String = "",
 
-    @OneToMany
-    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
-    val orders: Set<Order>? = null
+    @Transient
+    val orders: List<UserOrder>? = null
 )

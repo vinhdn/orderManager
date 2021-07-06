@@ -17,11 +17,7 @@ data class OrderProduct(
     val price: Long = 0,
     val total: Long = 0,
 
-    @ManyToOne(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id", insertable = false, updatable = false)
-    val order: Order? = null,
-
-    @ManyToOne(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+    @ManyToOne(cascade = [CascadeType.DETACH], fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
     val product: Product? = null
 )

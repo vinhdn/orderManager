@@ -13,8 +13,5 @@ data class ProductPhoto(
     @Column(name = "product_id")
     val productId: String = "",
 
-    val link: String = "",
-    @ManyToOne
-    @JoinColumn(name = "product_id", insertable = false, updatable = false)
-    var product: Product? = null
+    val link: String = ""
 )

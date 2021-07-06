@@ -1,6 +1,6 @@
 package com.vinhdn.order.manager.repository
 
-import com.vinhdn.order.manager.entity.Order
+import com.vinhdn.order.manager.entity.UserOrder
 
 
 enum class OrderStatus(val status: Int) {
@@ -11,5 +11,5 @@ enum class OrderStatus(val status: Int) {
 }
 
 interface OrderRepositoryCustom {
-    suspend fun findOrderByStatus(status: OrderStatus): List<Order>
+    suspend fun findOrderByStatus(status: OrderStatus): List<UserOrder>
 }

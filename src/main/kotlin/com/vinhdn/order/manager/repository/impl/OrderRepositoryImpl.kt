@@ -1,7 +1,6 @@
 package com.vinhdn.order.manager.repository.impl
 
-import com.vinhdn.order.manager.entity.Order
-import com.vinhdn.order.manager.repository.OrderRepository
+import com.vinhdn.order.manager.entity.UserOrder
 import com.vinhdn.order.manager.repository.OrderRepositoryCustom
 import com.vinhdn.order.manager.repository.OrderStatus
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,7 +13,7 @@ class OrderRepositoryImpl: OrderRepositoryCustom {
     @Autowired
     lateinit var enityManager: EntityManager
 
-    override suspend fun findOrderByStatus(status: OrderStatus): List<Order> {
+    override suspend fun findOrderByStatus(status: OrderStatus): List<UserOrder> {
 
         return emptyList()
     }
