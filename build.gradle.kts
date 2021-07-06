@@ -8,7 +8,7 @@ plugins {
     kotlin("plugin.spring") version "1.4.32"
 }
 
-group = "com.humaxdigital"
+group = "com.vinhdn"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
@@ -25,6 +25,8 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
@@ -43,4 +45,5 @@ tasks.withType<Test> {
 tasks.withType<BootBuildImage> {
     builder = "paketobuildpacks/builder:tiny"
     environment = mapOf("BP_NATIVE_IMAGE" to "true")
+    imageName = "demospring"
 }

@@ -6,6 +6,10 @@
 </head>
 <body>
     <H1 th:utext="#{hello}">Hello</H1>
-    <a th:href="@{/listTodo}">Todo list</a>
+
+    <form method="get" th:action="@{/hello}">
+        <input type="input" name="name">
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>
