@@ -13,7 +13,7 @@ data class Product(
     val salePrice: Long = 0,
     val quantity: Int = 0,
 
-    @OneToMany(cascade = [CascadeType.DETACH], fetch = FetchType.EAGER)
+    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     var photos: List<ProductPhoto>? = null
 )

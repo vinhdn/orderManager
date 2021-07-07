@@ -10,6 +10,7 @@ data class Customer(
     val name: String = "",
     val phone: String = "",
     val address: String = "",
+    val shopId: String? = null,
 
     @Transient
     val orders: List<UserOrder>? = null

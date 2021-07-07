@@ -20,7 +20,7 @@ class ProductController {
 
     @PostMapping("create")
     suspend fun createProduct(@RequestBody product: Product,
-                              @RequestParam("photos", required = false) files: Array<MultipartFile>? = null) = coroutineScope {
+                              @RequestPart("photos", required = false) files: Array<MultipartFile>? = null) = coroutineScope {
         product.id = RandomString.make(10)
         println(product.id)
         val productResult = productService.createProduct(product).awaitFirstOrNull()
@@ -38,7 +38,7 @@ class ProductController {
     suspend fun modifyProduct(
         @PathVariable("productId") productId: String,
         @RequestBody product: Product,
-        @RequestParam("photos", required = false) files: Array<MultipartFile>? = null
+        @RequestPart("photos", required = false) files: Array<MultipartFile>? = null
     ) = coroutineScope {
         files?.map { async { productService.uploadImage(product.id, it) } }?.awaitAll()
         ResponseEntity.ok(productService.createProduct(product).awaitFirstOrNull())
@@ -47,7 +47,7 @@ class ProductController {
     @PostMapping("{productId}/photos")
     suspend fun uploadProductPhoto(
         @PathVariable("productId") productId: String,
-        @RequestParam("photos[]", required = false) files: Array<MultipartFile>? = null
+        @RequestPart("photos", required = false) files: Array<MultipartFile>? = null
     ) = coroutineScope {
         val result = ResponseEntity.ok(files?.map { async { productService.uploadImage(productId, it).awaitFirstOrNull() } }?.awaitAll())
         result

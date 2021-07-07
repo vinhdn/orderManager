@@ -20,6 +20,10 @@ class CustomerService {
         customerRepository.findAll()
     }
 
+    fun customerByShopId(shopId: String) = mono {
+        customerRepository.findAllByShopId(shopId)
+    }
+
     fun customerById(id: String) = mono {
         customerRepository.findById(id)
     }

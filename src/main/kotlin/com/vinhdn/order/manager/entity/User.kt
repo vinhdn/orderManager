@@ -10,16 +10,11 @@ import javax.persistence.*
 @Entity
 @Table(name = "user")
 class User : Serializable {
-    @JsonView(UserViews.Member::class)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    var id: Long? = null
 
+    @Id
     @JsonView(UserViews.Member::class)
     @Column(name = "username")
-    var userName: String? = null
+    var username: String? = null
 
     @JsonIgnore
     @Column(name = "password")
@@ -49,6 +44,9 @@ class User : Serializable {
     @JsonView(UserViews.Admin::class)
     @Column(name = "is_deleted")
     var isDeleted = 0
+
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+    val userShops: List<UserShop>? = null
 
     companion object {
         private const val serialVersionUID = 1L

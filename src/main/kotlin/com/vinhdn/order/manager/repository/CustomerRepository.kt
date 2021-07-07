@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface CustomerRepository: JpaRepository<Customer, String> {
     fun findAllByNameContainsOrPhoneContains(name: String, phone: String)
+    fun findAllByShopId(shopId: String)
 }

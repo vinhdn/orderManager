@@ -24,23 +24,23 @@ data class UserOrder(
     @Column(name = "create_date")
     val createDate: Date? = null,
 
-    @ManyToOne(cascade = [CascadeType.DETACH], fetch = FetchType.EAGER)
+    @ManyToOne(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", insertable = false, updatable = false)
     val customer: Customer? = null,
 
-    @ManyToOne(cascade = [CascadeType.DETACH], fetch = FetchType.EAGER)
+    @ManyToOne(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     @JoinColumn(name = "shop_id", insertable = false, updatable = false)
     val shop: Shop? = null,
 
-    @ManyToOne(cascade = [CascadeType.DETACH], fetch = FetchType.EAGER)
+    @ManyToOne(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     @JoinColumn(name = "user_create", insertable = false, updatable = false)
     val userCreate: User? = null,
 
-    @OneToMany(cascade = [CascadeType.DETACH], fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id")
+    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", insertable = false, updatable = false)
     val orderProducts: List<OrderProduct>? = null,
 
-    @OneToMany(cascade = [CascadeType.DETACH], fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
+    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", insertable = false, updatable = false)
     val orderShips: List<OrderShip>? = null
 )
