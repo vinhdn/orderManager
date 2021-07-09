@@ -10,11 +10,11 @@ data class UserOrder(
     @Id
     var id: String = "",
     @Column(name = "shop_id")
-    val shopId: String = "",
+    var shopId: String? = "",
     @Column(name = "customer_id")
     val customerId: String = "",
     @Column(name = "total_price")
-    val totalPrice: Long = 0,
+    var totalPrice: Long = 0,
     val note: String? = null,
 
     @Column(name = "sales_channel")
@@ -22,19 +22,19 @@ data class UserOrder(
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date")
-    val createDate: Date? = null,
+    var createDate: Date? = null,
 
     @ManyToOne(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", insertable = false, updatable = false)
-    val customer: Customer? = null,
+    var customer: Customer? = null,
 
     @ManyToOne(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     @JoinColumn(name = "shop_id", insertable = false, updatable = false)
-    val shop: Shop? = null,
+    var shop: Shop? = null,
 
     @ManyToOne(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     @JoinColumn(name = "user_create", insertable = false, updatable = false)
-    val userCreate: User? = null,
+    var userCreate: User? = null,
 
     @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", insertable = false, updatable = false)

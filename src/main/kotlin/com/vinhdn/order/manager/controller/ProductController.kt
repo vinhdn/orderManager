@@ -1,6 +1,7 @@
 package com.vinhdn.order.manager.controller
 
 import com.vinhdn.order.manager.entity.Product
+import com.vinhdn.order.manager.extension.responseSuccess
 import com.vinhdn.order.manager.service.ProductService
 import kotlinx.coroutines.*
 import kotlinx.coroutines.reactive.awaitFirstOrNull
@@ -19,29 +20,28 @@ class ProductController {
     lateinit var productService: ProductService
 
     @PostMapping("create")
-    suspend fun createProduct(@RequestBody product: Product,
-                              @RequestPart("photos", required = false) files: Array<MultipartFile>? = null) = coroutineScope {
-        product.id = RandomString.make(10)
-        println(product.id)
+    suspend fun createProduct(@ModelAttribute product: Product,
+                              @RequestPart("files", required = false) files: List<MultipartFile>? = null) = coroutineScope {
+        product.id = RandomString.make(15)
         val productResult = productService.createProduct(product).awaitFirstOrNull()
             ?: return@coroutineScope ResponseEntity.badRequest()
         files?.map { async { productService.uploadImage(product.id, it) } }?.awaitAll()
-        ResponseEntity.ok(productResult)
+        responseSuccess("data", productResult)
     }
 
     @GetMapping("")
     suspend fun getAllProduct() = coroutineScope {
-        ResponseEntity.ok(productService.findAllProduct().awaitFirstOrNull())
+        responseSuccess("data", productService.findAllProduct().awaitFirstOrNull())
     }
 
     @PostMapping("{productId}/modify")
     suspend fun modifyProduct(
         @PathVariable("productId") productId: String,
-        @RequestBody product: Product,
-        @RequestPart("photos", required = false) files: Array<MultipartFile>? = null
+        @ModelAttribute product: Product,
+        @RequestPart("photos", required = false) files: List<MultipartFile>? = null
     ) = coroutineScope {
         files?.map { async { productService.uploadImage(product.id, it) } }?.awaitAll()
-        ResponseEntity.ok(productService.createProduct(product).awaitFirstOrNull())
+        responseSuccess("data", productService.createProduct(product).awaitFirstOrNull())
     }
 
     @PostMapping("{productId}/photos")
@@ -50,7 +50,7 @@ class ProductController {
         @RequestPart("photos", required = false) files: Array<MultipartFile>? = null
     ) = coroutineScope {
         val result = ResponseEntity.ok(files?.map { async { productService.uploadImage(productId, it).awaitFirstOrNull() } }?.awaitAll())
-        result
+        responseSuccess("data", result)
     }
 
 }

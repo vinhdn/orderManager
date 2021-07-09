@@ -4,7 +4,7 @@ import java.util.logging.Logger
 
 val logger: Logger = Logger.getLogger("Response")
 
-fun <T : Any> responseSuccess(key: String?, `object`: T, message: String?): Map<String?, Any?>? {
+fun <T : Any> responseSuccess(key: String?, `object`: T?, message: String?): Map<String?, Any?>? {
     val map: MutableMap<String?, Any?> = HashMap()
     map["status"] = 1
     if (message != null) map["message"] = message
@@ -26,7 +26,7 @@ fun responseError(message: String?, status: String): Map<String?, Any?>? {
     return map
 }
 
-fun <T: Any> responseSuccess(key: String? = "data", `object`: T): Map<String?, Any?>? {
+fun <T: Any> responseSuccess(key: String? = "data", `object`: T?): Map<String?, Any?>? {
     return responseSuccess(key, `object`, null)
 }
 

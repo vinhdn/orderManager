@@ -45,7 +45,7 @@ class User : Serializable {
     @Column(name = "is_deleted")
     var isDeleted = 0
 
-    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+    @Transient
     val userShops: List<UserShop>? = null
 
     companion object {
